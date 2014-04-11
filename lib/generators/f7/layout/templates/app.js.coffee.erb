@@ -1,0 +1,76 @@
+ViewNameExistsException = (value) ->
+  @value = value
+  @message = "view already exists called"
+  @toString = ->
+    "#{@message} '#{@value}'"
+  return
+
+<%- app_class = "#{app_name.camelize}App" -%>
+<%= app_class %> = ->
+  self = @
+
+  # Private Members
+  _instance = new Framework7
+    init: false
+  _handlers = {}
+  _pageInit = {}
+  _views = {}
+  $$ = _instance.$
+
+  $$(document).on 'pageInit', (e) ->
+    page = e.detail.page
+    
+    if _pageInit[page.name]?
+      fn(_instance) for fn in _pageInit[page.name]
+    return
+    
+  # Public Members
+  @addEvent = (el, ev, fn) ->
+    fqEv = "#{el}::#{ev}"
+    _handlers[fqEv] = fn
+    
+    $el = $(el)
+    $el.on ev, fn
+    self
+  
+  @addPageInit = (page, fn) ->
+    _pageInit[page] = [] unless _pageInit[page]?
+    _pageInit[page].push fn
+    self
+    
+  @addView = (name, el, options = {}) ->
+    if _views[name]
+      throw new ViewNameExistsException(name)
+
+    _views[name] = _instance.addView(el, options)
+    self
+  
+  @getInstance = ->
+    _instance
+  
+  @removeEvent = (el, ev, sel = el) ->
+    fqEv = "#{el}::#{ev}"
+    if _handlers[fqEv]?
+      fn = _handlers[fqEv]
+    
+    $el = $(sel)
+    $sel.off ev
+    _handlers[fqEv] = null if sel is el
+    self
+  @
+
+window.app = new <%= app_class %>()
+
+$(document).ready ->
+  $$('.panel-left').on 'open', (e) ->
+    $$('.statusbar-overlay').addClass 'with-panel-left'
+    return
+  $$('.panel-right').on 'open', (e) ->
+    $$('.statusbar-overlay').addClass 'with-panel-right'
+    return
+  $$('.panel-left, .panel-right').on 'close', (e) ->
+    $$('.statusbar-overlay').removeClass 'with-panel-left with-panel-right'
+    return
+    
+  app.getInstance().init()
+  return
