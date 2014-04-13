@@ -6,6 +6,7 @@ ViewNameExistsException = (value) ->
   return
 
 <%- app_class = "#{app_name.camelize}App" -%>
+<%- app_var = "#{app_name.camelize(:lower)}App" -%>
 <%= app_class %> = ->
   self = @
 
@@ -15,7 +16,7 @@ ViewNameExistsException = (value) ->
   _handlers = {}
   _pageInit = {}
   _views = {}
-  $$ = _instance.$
+  window.$$ = _instance.$
 
   $$(document).on 'pageInit', (e) ->
     page = e.detail.page
@@ -59,7 +60,7 @@ ViewNameExistsException = (value) ->
     self
   @
 
-window.app = new <%= app_class %>()
+window.<%= app_var %> = new <%= app_class %>()
 
 $(document).ready ->
   $$('.panel-left').on 'open', (e) ->
@@ -72,5 +73,5 @@ $(document).ready ->
     $$('.statusbar-overlay').removeClass 'with-panel-left with-panel-right'
     return
     
-  app.getInstance().init()
+  window.app = <%= app_var %>.getInstance().init()
   return

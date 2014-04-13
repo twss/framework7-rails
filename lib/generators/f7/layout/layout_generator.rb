@@ -15,14 +15,6 @@ module F7
         ext = app.config.generators.options[:rails][:template_engine] || :erb
         template "layout.html.#{ext}", "app/views/layouts/#{layout_name}.html.#{ext}"
         template "app.js.coffee.erb", "app/assets/javascripts/#{@app_name.underscore}.js.coffee"
-        
-        insert_into_file "app/assets/javascripts/application.js", :before => %r{//= require +['"]?jquery['"]?$} do
-          "//= require 'framework7'\n"
-        end
-        
-        insert_into_file "app/assets/stylesheets/application.css", :before => "*/" do
-          " *= require 'framework7'\n"
-        end
       end
     end
   end
