@@ -3,9 +3,9 @@
 [![Gem Version](https://badge.fury.io/rb/framework7-rails.svg)](http://badge.fury.io/rb/framework7-rails)
 
 Brings the excellent [Framework7](https://github.com/nolimits4web/framework7/)
-into the Rails 3.1+ Asset Pipeline.
+into the Rails 3.1.x - 4.x Asset Pipeline.
 
-The gem version number ``x.y.z`` is kept in sync with the version of Framework7
+The gem version number `x.y.z` is kept in sync with the version of Framework7
 being supported.
 
 ## Installation
@@ -13,6 +13,10 @@ being supported.
 Add this line to your application's Gemfile:
 
     gem 'framework7-rails'
+    
+If you want bleeding edge, not yet in ruby gems version, add this instead:
+
+    gem 'framework7-rails', :git => 'https://github.com/twss/framework7-rails.git'`
 
 And then execute:
 
@@ -30,8 +34,6 @@ The easiest way to set up ready for use is to use the generator
 
 You can do it manually if you want to, as outlined below:
 
-### Development/Debugging
-
 In your application.js file, add the line:
 
     //= require framework7
@@ -39,16 +41,7 @@ In your application.js file, add the line:
 In your application.css file, add the line:
 
     *= require framework7
-
-### Production
-
-In your application.js file, add the line:
-
-    //= require framework7.min
-   
-In your application.css file, add the line:
-
-    *= require framework7.min
+    *= require framework7.theme
 
 ## Generators
 
@@ -60,33 +53,30 @@ This generator will add the necessary require statements as outlined above.
 
 This sets up an application-level layout, and will generate two files:
 
-    app/assets/javascripts/<app_name>.js.coffee
+    app/assets/javascripts/<app_name>.js or app/assets/javascripts/<app_name>.coffee
     app/views/layouts/application.html.erb
-    
-The javascript file creates a wrapping class around the main `Framework7` class.
-This new class is named after your application, an instance is created with the
-lower camel-cased application.
 
-e.g If you did `rails new contacts_app` the javascript file will contain:
+For now, at least, the javascript generated has been scaled back, to be:
 
-    var contactsApp;
-    
-    ContactsApp = function() {
-      ...
-    };
-    
-    contactsApp = new ContactsApp();
+```javascript
+window.F7H = {
+  app: new Framework7(),
+  dom: Dom7
+};
 
-If you ever need to get back to the Framework7 application instance, this is
-achieved as follows:
+window.Phone = {
+  Views: {}
+};
 
-    app = contactsApp.getInstance();
-    
-This may be necessary for future plans, but not too sure. For now it will be
-left in, but you can always fallback to the Framework7 native way of doing
-things by using the above line and never touching that `contactsApp` variable
-again.
-    
+Phone.Views.Main = F7H.app.addView('.view-main', {
+  dynamicNavbar: true
+});
+```
+
+### f7:install:examples
+
+*Removed, as they didn't really add anything of value.*
+
 ### And there's more...
 
 To find out about the rest of the generators, be sure to 
@@ -95,21 +85,36 @@ be updated as more become available.
 
 ## Helpers
 
-None yet, but this will be listed here, and refer to the [wiki] for the
-documentation.
+Refer to the [wiki] for the usage/documentation.
+
+* [f7_app]
+* [f7_views]
+* [f7_view]
+* [f7_navbar]
+* [f7_pages]
+* [f7_page]
 
 ## Future Improvements
 
-Currently, the gem only brings in the assets. But it is the intention to add
-layout/view generators and helpers.
+In the immediate future we'd like to:
+
+* Make the code a bit more DRY.
+* Move all the grunt work out of the helpers, into Presenters/Decorators.
+* Add javascript generation for the more dynamic elements.
 
 ## Contributing
 
-1. Fork it ( http://github.com/twss/framework7-rails/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+1. Fork it [http://github.com/twss/framework7-rails/fork](http://github.com/twss/framework7-rails/fork).
+2. Create your feature branch (`git checkout -b my-new-feature`).
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin my-new-feature`).
+5. Create new Pull Request.
 
 
 [wiki]: https://github.com/twss/framework7-rails/wiki "wiki"
+[f7_app]: https://github.com/twss/framework7-rails/wiki/helpers/f7_app
+[f7_navbar]: https://github.com/twss/framework7-rails/wiki/helpers/f7_navbar
+[f7_page]: https://github.com/twss/framework7-rails/wiki/helpers/f7_page
+[f7_pages]: https://github.com/twss/framework7-rails/wiki/helpers/f7_pages
+[f7_view]: https://github.com/twss/framework7-rails/wiki/helpers/f7_view
+[f7_views]: https://github.com/twss/framework7-rails/wiki/helpers/f7_views

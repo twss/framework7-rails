@@ -1,6 +1,6 @@
 module AppHelper
   # Provides the skeleton application layout ready to be customised
-  def f7_app(options={}, &block)
+  def f7_app(*args, &block)
     output = []
     output << statusbar_overlay_div
     output << panel_overlay_div

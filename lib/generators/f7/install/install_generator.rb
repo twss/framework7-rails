@@ -18,7 +18,7 @@ module F7
         css_manifest = 'app/assets/stylesheets/application.css'
         
         if File.exist?(css_manifest)
-          insert_into_file css_manifest, " *= require framework7\n", :after => "require_self\n"
+          insert_into_file css_manifest, " *= require framework7\n *= require framework7.themes\n", :before => " *= require_self"
         else
           copy_file "application.css", css_manifest
         end

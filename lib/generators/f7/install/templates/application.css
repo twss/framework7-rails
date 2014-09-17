@@ -10,5 +10,6 @@
  *
  *= require_self
  *= require framework7
+ *= require framework7.themes
  *= require_tree .
  */
