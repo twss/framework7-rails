@@ -41,7 +41,7 @@ In your application.js file, add the line:
 In your application.css file, add the line:
 
     *= require framework7
-    *= require framework7.theme
+    *= require framework7.themes
 
 ## Generators
 
@@ -112,9 +112,9 @@ In the immediate future we'd like to:
 
 
 [wiki]: https://github.com/twss/framework7-rails/wiki "wiki"
-[f7_app]: https://github.com/twss/framework7-rails/wiki/helpers/f7_app
-[f7_navbar]: https://github.com/twss/framework7-rails/wiki/helpers/f7_navbar
-[f7_page]: https://github.com/twss/framework7-rails/wiki/helpers/f7_page
-[f7_pages]: https://github.com/twss/framework7-rails/wiki/helpers/f7_pages
-[f7_view]: https://github.com/twss/framework7-rails/wiki/helpers/f7_view
-[f7_views]: https://github.com/twss/framework7-rails/wiki/helpers/f7_views
+[f7_app]: https://github.com/twss/framework7-rails/wiki/f7_app
+[f7_navbar]: https://github.com/twss/framework7-rails/wiki/f7_navbar
+[f7_page]: https://github.com/twss/framework7-rails/wiki/f7_page
+[f7_pages]: https://github.com/twss/framework7-rails/wiki/f7_pages
+[f7_view]: https://github.com/twss/framework7-rails/wiki/f7_view
+[f7_views]: https://github.com/twss/framework7-rails/wiki/f7_views
